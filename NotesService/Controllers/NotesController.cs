@@ -22,10 +22,10 @@ namespace NotesService.Controllers
 
         // GET: api/Tenant123/Notes/5
         [ResponseType(typeof(Note))]
-        public IHttpActionResult GetNote(string tenantId, string id)
+        public IHttpActionResult GetNote(string tenantId, int id)
         {
-            Note note = db.Notes.Find(id);
-            if (note == null || note.TenantId != tenantId)
+            var note = db.Notes.FirstOrDefault(n => n.TenantId == tenantId && n.Id == id);
+            if (note == null)
             {
                 return NotFound();
             }
